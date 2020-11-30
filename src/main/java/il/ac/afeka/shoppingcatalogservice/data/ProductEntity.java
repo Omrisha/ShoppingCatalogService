@@ -2,6 +2,10 @@ package il.ac.afeka.shoppingcatalogservice.data;
 
 import javax.persistence.*;
 
+import il.ac.afeka.shoppingcatalogservice.layout.CategoryBoundary;
+import il.ac.afeka.shoppingcatalogservice.layout.ProductBoundary;
+import il.ac.afeka.shoppingcatalogservice.layout.ProductDetails;
+
 @Entity
 public class ProductEntity {
     private String id;
@@ -72,5 +76,17 @@ public class ProductEntity {
 
     public void setCategory(CategoryEntity category) {
         this.category = category;
+    }
+    
+    public ProductBoundary toBoundary() {
+    	return new ProductBoundary(this.getId(),
+				this.getName(),
+				this.getPrice(),
+				this.getImage(),
+				new ProductDetails(this.getDetails().getParts(),
+						this.getDetails().getManufacturer(),
+						this.getDetails().getCollectable()),
+				new CategoryBoundary(this.getCategory().getName(),
+						this.getCategory().getDescription()));
     }
 }

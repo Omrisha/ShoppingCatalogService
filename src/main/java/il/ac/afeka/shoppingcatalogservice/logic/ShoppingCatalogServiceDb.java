@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,12 +54,7 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
         ProductDetailsEntity productDetailsEntity = productDetailDao.save(entity.getDetails());
         entity.setDetails(productDetailsEntity);
         ProductEntity saved = productsDao.save(entity);
-        return new ProductBoundary(saved.getId(),
-                                saved.getName(),
-                                saved.getPrice(),
-                                saved.getImage(),
-                                new ProductDetails(saved.getDetails().getParts(), saved.getDetails().getManufacturer(), saved.getDetails().getCollectable()),
-                                new CategoryBoundary(saved.getCategory().getName(), saved.getCategory().getDescription()));
+        return saved.toBoundary();
     }
 
     @Override
@@ -95,8 +91,60 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
     @Override
     @Transactional(readOnly = true)
     public ProductBoundary[] searchProducts(String filterType, String filterValue, String sortBy, String sortOrder, int page, int size) {
-        // TODO: make search products with filter as eyal describes
-        return new ProductBoundary[0];
+    	   	
+        if (filterType.isEmpty()) {
+        	 return this.productsDao
+        			.findAll(PageRequest.of(page,
+        					size,
+        					sortOrder.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
+                            sortBy))
+        			.stream()
+        			.map(e -> e.toBoundary())
+        			.collect(Collectors.toList())
+        			.toArray(ProductBoundary[]::new);
+        }
+        
+        List<ProductEntity> res = null;
+        
+        if (filterType.equals("byName")) {
+        	res = this.productsDao
+        			.findByName(filterValue, PageRequest.of(page,
+        					size,
+        					sortOrder.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
+                            sortBy));
+        }
+        
+        if (filterType.equals("byMinPrice")) {
+        	double price = Double.parseDouble(filterValue);
+        	res = this.productsDao
+        			.findByPriceIsGreaterThanEqual(price, PageRequest.of(page,
+        					size,
+        					sortOrder.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
+                            sortBy));
+        }
+        
+        if (filterType.equals("byMaxPrice")) {
+        	double price = Double.parseDouble(filterValue);
+        	res = this.productsDao
+        			.findByPriceIsLessThanEqual(price, PageRequest.of(page,
+        					size,
+        					sortOrder.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
+                            sortBy));
+        }
+        
+        if (filterType.equals("byCategoryName")) {
+        	res = this.productsDao
+        			.findByCategoryName(filterValue, PageRequest.of(page,
+        					size,
+        					sortOrder.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
+                            sortBy));
+        }
+    	
+        return res == null ? new ProductBoundary[0] : res
+        		.stream()
+    			.map(e -> e.toBoundary())
+    			.collect(Collectors.toList())
+    			.toArray(ProductBoundary[]::new);
     }
 
     @Override
