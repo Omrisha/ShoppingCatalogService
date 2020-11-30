@@ -17,7 +17,7 @@ public class ShoppingCatalogController {
         this.shoppingCatalogService = shoppingCatalogService;
     }
 
-    @RequestMapping(path = "/shopping/products",
+    @RequestMapping(path = "/shopping/categories",
                     method = RequestMethod.POST,
                     consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createCategory(@RequestBody CategoryBoundary value) {

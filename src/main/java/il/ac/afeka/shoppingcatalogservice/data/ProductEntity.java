@@ -8,16 +8,14 @@ public class ProductEntity {
     private String name;
     private double price;
     private String image;
-    @OneToOne(mappedBy = "product")
     private ProductDetailsEntity details;
-    @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID")
     private CategoryEntity category;
 
     public ProductEntity() {
     }
 
-    public ProductEntity(String name, double price, String image, ProductDetailsEntity details, CategoryEntity category) {
+    public ProductEntity(String id, String name, double price, String image, ProductDetailsEntity details, CategoryEntity category) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.image = image;
@@ -58,6 +56,7 @@ public class ProductEntity {
         this.image = image;
     }
 
+    @OneToOne
     public ProductDetailsEntity getDetails() {
         return details;
     }
@@ -66,6 +65,7 @@ public class ProductEntity {
         this.details = details;
     }
 
+    @ManyToOne(targetEntity = CategoryEntity.class)
     public CategoryEntity getCategory() {
         return category;
     }

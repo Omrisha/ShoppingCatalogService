@@ -1,8 +1,6 @@
 package il.ac.afeka.shoppingcatalogservice.data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class ProductDetailsEntity {
@@ -10,13 +8,13 @@ public class ProductDetailsEntity {
     private String parts;
     private String manufacturer;
     private Boolean collectable;
-    @OneToOne
     private ProductEntity product;
 
     public ProductDetailsEntity() {
     }
 
-    public ProductDetailsEntity(String parts, String manufacturer, Boolean collectable, ProductEntity product) {
+    public ProductDetailsEntity(long id, String parts, String manufacturer, Boolean collectable, ProductEntity product) {
+        this.id = id;
         this.parts = parts;
         this.manufacturer = manufacturer;
         this.collectable = collectable;
@@ -24,6 +22,7 @@ public class ProductDetailsEntity {
     }
 
     @Id
+    @GeneratedValue
     public long getId() {
         return id;
     }
@@ -56,6 +55,7 @@ public class ProductDetailsEntity {
         this.collectable = collectable;
     }
 
+    @OneToOne(mappedBy = "details", targetEntity = ProductEntity.class)
     public ProductEntity getProduct() {
         return product;
     }

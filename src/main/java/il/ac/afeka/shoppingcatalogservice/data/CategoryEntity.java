@@ -5,12 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "CATEGORIES")
 public class CategoryEntity {
-    private long id;
     private String name;
     private String description;
-    @OneToMany(mappedBy = "category")
     private List<ProductEntity> product = new ArrayList<>();
 
     public CategoryEntity() {
@@ -22,16 +19,7 @@ public class CategoryEntity {
         this.product = product;
     }
 
-    @Column(name = "CATEGORY_ID")
     @Id
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -48,6 +36,7 @@ public class CategoryEntity {
         this.description = description;
     }
 
+    @OneToMany(mappedBy = "category")
     public List<ProductEntity> getProduct() {
         return product;
     }

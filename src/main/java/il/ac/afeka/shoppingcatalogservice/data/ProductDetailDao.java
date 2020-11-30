@@ -2,5 +2,5 @@ package il.ac.afeka.shoppingcatalogservice.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CategoryDao extends JpaRepository<CategoryEntity, String> {
+public interface ProductDetailDao extends JpaRepository<ProductDetailsEntity, Long> {
 }

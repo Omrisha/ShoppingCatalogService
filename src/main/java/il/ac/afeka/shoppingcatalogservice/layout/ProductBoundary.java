@@ -1,7 +1,7 @@
 package il.ac.afeka.shoppingcatalogservice.layout;
 
 public class ProductBoundary {
-    private long id;
+    private String id;
     private String name;
     private double price;
     private String image;
@@ -11,7 +11,8 @@ public class ProductBoundary {
     public ProductBoundary() {
     }
 
-    public ProductBoundary(String name, double price, String image, ProductDetails details, CategoryBoundary category) {
+    public ProductBoundary(String id, String name, double price, String image, ProductDetails details, CategoryBoundary category) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.image = image;
@@ -19,11 +20,11 @@ public class ProductBoundary {
         this.category = category;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
