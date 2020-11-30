@@ -8,4 +8,12 @@ public interface ShoppingCatalogService {
     void createCategory(CategoryBoundary value);
 
     ProductBoundary createProduct(ProductBoundary value);
+
+    CategoryBoundary[] searchCategories(String sortAttr, String sortOrder, int page, int size);
+
+    ProductBoundary getProductById(String productId);
+
+    ProductBoundary[] searchProducts(String filterType, String filterValue, String sortBy, String sortOrder, int page, int size);
+
+    void delete();
 }

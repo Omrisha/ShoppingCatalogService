@@ -2,13 +2,17 @@ package il.ac.afeka.shoppingcatalogservice.logic;
 
 import il.ac.afeka.shoppingcatalogservice.data.*;
 import il.ac.afeka.shoppingcatalogservice.errors.InternalErrorException;
+import il.ac.afeka.shoppingcatalogservice.errors.NotFoundException;
 import il.ac.afeka.shoppingcatalogservice.layout.CategoryBoundary;
 import il.ac.afeka.shoppingcatalogservice.layout.ProductBoundary;
 import il.ac.afeka.shoppingcatalogservice.layout.ProductDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.stream.Collectors;
 
 @Service
 public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
@@ -39,8 +43,10 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
     public ProductBoundary createProduct(ProductBoundary value) {
         ProductEntity entity = ConvertToProductEntity(value);
         CategoryEntity category = categoryDao.findById(value.getCategory().getName()).orElse(null);
+        // Check category is already exist, or return 500 Error code
         if (category == null)
             throw new InternalErrorException("category must exist in the database");
+        // Check if product with the same id is already exist, or return 500 error code
         ProductEntity product = productsDao.findById(value.getId()).orElse(null);
         if (product != null)
             throw new InternalErrorException("product with the same id is already exists.");
@@ -55,6 +61,51 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
                                 new CategoryBoundary(saved.getCategory().getName(), saved.getCategory().getDescription()));
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public CategoryBoundary[] searchCategories(String sortAttr, String sortOrder, int page, int size) {
+        return categoryDao.
+                findAll(PageRequest.of(page,
+                                    size,
+                                    sortOrder.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
+                                    sortAttr))
+                .stream()
+                .map(e -> new CategoryBoundary(e.getName(), e.getDescription()))
+                .collect(Collectors.toList())
+                .toArray(CategoryBoundary[]::new);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ProductBoundary getProductById(String productId) {
+        ProductEntity entity = productsDao.findById(productId).orElse(null);
+
+        if (entity == null) {
+            throw new NotFoundException("Product with the requested catalog number wasn't found.");
+        }
+
+        return new ProductBoundary(entity.getId(),
+                entity.getName(),
+                entity.getPrice(),
+                entity.getImage(),
+                new ProductDetails(entity.getDetails().getParts(), entity.getDetails().getManufacturer(), entity.getDetails().getCollectable()),
+                new CategoryBoundary(entity.getCategory().getName(), entity.getCategory().getDescription()));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ProductBoundary[] searchProducts(String filterType, String filterValue, String sortBy, String sortOrder, int page, int size) {
+        // TODO: make search products with filter as eyal describes
+        return new ProductBoundary[0];
+    }
+
+    @Override
+    public void delete() {
+        this.categoryDao.deleteAll();
+        this.productDetailDao.deleteAll();
+        this.productsDao.deleteAll();
+    }
+
     private ProductEntity ConvertToProductEntity(ProductBoundary value) {
         ProductEntity entity = new ProductEntity();
 
@@ -66,7 +117,7 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
         if (value.getImage() != null)
             entity.setImage(value.getImage());
         if (value.getDetails() != null) {
-            entity.setDetails(ConvetToProductDetailsEntity(value.getDetails()));
+            entity.setDetails(ConvertToProductDetailsEntity(value.getDetails()));
         }
         if (value.getCategory() != null) {
             entity.setCategory(ConvertToCategoryEntity(value.getCategory()));
@@ -86,7 +137,7 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
         return entity;
     }
 
-    private ProductDetailsEntity ConvetToProductDetailsEntity(ProductDetails details) {
+    private ProductDetailsEntity ConvertToProductDetailsEntity(ProductDetails details) {
         ProductDetailsEntity entity = new ProductDetailsEntity();
 
         if (details.getManufacturer() != null)
