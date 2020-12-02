@@ -32,11 +32,13 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
 
     @Override
     @Transactional
-    public void createCategory(CategoryBoundary value) {
+    public CategoryBoundary createCategory(CategoryBoundary value) {
         CategoryEntity category = new CategoryEntity();
         category.setName(value.getName());
         category.setDescription(value.getDescription());
-        categoryDao.save(category);
+        CategoryEntity saved = categoryDao.save(category);
+
+        return saved.toBoundary();
     }
 
     @Override
@@ -190,8 +192,7 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
 
         if (details.getManufacturer() != null)
             entity.setManufacturer(details.getManufacturer());
-        if (details.getParts() != null)
-            entity.setParts(details.getParts());
+        entity.setParts(details.getParts());
         entity.setCollectable(details.getCollectable());
 
         return entity;

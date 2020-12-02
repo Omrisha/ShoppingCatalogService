@@ -1,5 +1,9 @@
 package il.ac.afeka.shoppingcatalogservice.data;
 
+import il.ac.afeka.shoppingcatalogservice.layout.CategoryBoundary;
+import il.ac.afeka.shoppingcatalogservice.layout.ProductBoundary;
+import il.ac.afeka.shoppingcatalogservice.layout.ProductDetails;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,5 +47,11 @@ public class CategoryEntity {
 
     public void setProduct(List<ProductEntity> product) {
         this.product = product;
+    }
+
+    public CategoryBoundary toBoundary() {
+        return new CategoryBoundary(
+                this.getName(),
+                this.getDescription());
     }
 }

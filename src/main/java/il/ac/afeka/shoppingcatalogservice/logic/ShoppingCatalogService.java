@@ -5,7 +5,7 @@ import il.ac.afeka.shoppingcatalogservice.layout.ProductBoundary;
 
 public interface ShoppingCatalogService {
 
-    void createCategory(CategoryBoundary value);
+    CategoryBoundary createCategory(CategoryBoundary value);
 
     ProductBoundary createProduct(ProductBoundary value);
 
