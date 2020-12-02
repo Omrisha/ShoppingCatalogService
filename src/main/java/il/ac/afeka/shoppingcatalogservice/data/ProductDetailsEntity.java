@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class ProductDetailsEntity {
     private long id;
-    private String parts;
+    private int parts;
     private String manufacturer;
     private Boolean collectable;
     private ProductEntity product;
@@ -13,7 +13,7 @@ public class ProductDetailsEntity {
     public ProductDetailsEntity() {
     }
 
-    public ProductDetailsEntity(long id, String parts, String manufacturer, Boolean collectable, ProductEntity product) {
+    public ProductDetailsEntity(long id, int parts, String manufacturer, Boolean collectable, ProductEntity product) {
         this.id = id;
         this.parts = parts;
         this.manufacturer = manufacturer;
@@ -31,11 +31,11 @@ public class ProductDetailsEntity {
         this.id = id;
     }
 
-    public String getParts() {
+    public int getParts() {
         return parts;
     }
 
-    public void setParts(String parts) {
+    public void setParts(int parts) {
         this.parts = parts;
     }
 

@@ -1,24 +1,24 @@
 package il.ac.afeka.shoppingcatalogservice.layout;
 
 public class ProductDetails {
-    private String parts;
+    private int parts;
     private String manufacturer;
     private Boolean collectable;
 
     public ProductDetails() {
     }
 
-    public ProductDetails(String parts, String manufacturer, Boolean collectable) {
+    public ProductDetails(int parts, String manufacturer, Boolean collectable) {
         this.parts = parts;
         this.manufacturer = manufacturer;
         this.collectable = collectable;
     }
 
-    public String getParts() {
+    public int getParts() {
         return parts;
     }
 
-    public void setParts(String parts) {
+    public void setParts(int parts) {
         this.parts = parts;
     }
 
