@@ -10,7 +10,7 @@ Microservice for saving and querying products and categories.
 
 ## Installation
 
-* `git clone https://github.com/Omrisha/messages-service-afeka`
+* `git clone https://github.com/Omrisha/ShoppingCatalogService.git`
 * Open project in IntelliJ (Open project menu or import from git menu)
 * Open project in Eclipse (File -> Import -> Import existing Gradle Project menu)
 * after opening let gradle built and make the project.
