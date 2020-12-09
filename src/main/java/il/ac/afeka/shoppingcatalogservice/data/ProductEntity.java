@@ -1,6 +1,8 @@
 package il.ac.afeka.shoppingcatalogservice.data;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
 
 import il.ac.afeka.shoppingcatalogservice.layout.CategoryBoundary;
 import il.ac.afeka.shoppingcatalogservice.layout.ProductBoundary;
@@ -9,8 +11,11 @@ import il.ac.afeka.shoppingcatalogservice.layout.ProductDetails;
 @Entity
 public class ProductEntity {
     private String id;
+    @NotBlank
     private String name;
+    @DecimalMin("0.0")
     private double price;
+    @NotBlank
     private String image;
     private ProductDetailsEntity details;
     private CategoryEntity category;

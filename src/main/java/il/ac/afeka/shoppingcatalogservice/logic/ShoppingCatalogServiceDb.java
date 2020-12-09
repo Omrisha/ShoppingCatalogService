@@ -166,8 +166,8 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
         entity.setPrice(value.getPrice());
         if (value.getImage() != null)
             entity.setImage(value.getImage());
-        if (value.getDetails() != null) {
-            entity.setDetails(ConvertToProductDetailsEntity(value.getDetails()));
+        if (value.getProductDetails() != null) {
+            entity.setDetails(ConvertToProductDetailsEntity(value.getProductDetails()));
         }
         if (value.getCategory() != null) {
             entity.setCategory(ConvertToCategoryEntity(value.getCategory()));

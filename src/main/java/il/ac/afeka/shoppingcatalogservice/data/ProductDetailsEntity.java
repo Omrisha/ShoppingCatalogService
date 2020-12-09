@@ -1,11 +1,15 @@
 package il.ac.afeka.shoppingcatalogservice.data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class ProductDetailsEntity {
     private long id;
+    @Min(0)
     private int parts;
+    @NotBlank
     private String manufacturer;
     private Boolean collectable;
     private ProductEntity product;
