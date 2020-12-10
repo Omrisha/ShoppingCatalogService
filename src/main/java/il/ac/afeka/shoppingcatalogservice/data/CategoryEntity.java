@@ -5,12 +5,16 @@ import il.ac.afeka.shoppingcatalogservice.layout.ProductBoundary;
 import il.ac.afeka.shoppingcatalogservice.layout.ProductDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class CategoryEntity {
+	@NotBlank
     private String name;
+	@NotBlank
     private String description;
     private List<ProductEntity> product = new ArrayList<>();
 

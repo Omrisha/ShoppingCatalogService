@@ -52,11 +52,11 @@ public class ProductBoundary {
         this.image = image;
     }
 
-    public ProductDetails getDetails() {
+    public ProductDetails getProductDetails() {
         return details;
     }
 
-    public void setDetails(ProductDetails details) {
+    public void setProductDetails(ProductDetails details) {
         this.details = details;
     }
 
