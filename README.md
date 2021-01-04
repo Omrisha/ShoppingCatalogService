@@ -53,6 +53,7 @@ Microservice for saving and querying products and categories.
   
  ## GraphQL Usage
  CREATE:
+ ```
  mutation {
    writeProduct(
      id: "42",
@@ -74,8 +75,10 @@ Microservice for saving and querying products and categories.
      image
    }
  }
+ ```
  
  QUERY:
+ ```
  {
    getProducts(page: 0, size: 10){
      id,
@@ -87,6 +90,7 @@ Microservice for saving and querying products and categories.
      }
    }
  }
+ ```
 
 ## Product JSON Examples
     {
