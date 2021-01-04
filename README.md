@@ -50,6 +50,43 @@ Microservice for saving and querying products and categories.
 
 - DELETE /shopping
   Delete all categories and products in the system.
+  
+ ## GraphQL Usage
+ CREATE:
+ mutation {
+   writeProduct(
+     id: "42",
+     name: "Groot", 
+     price: 49.99, 
+     image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.myst.co.il%2Fitems%2F3247553-POP-Marvel-GotG-18-Dancing-Groot-Funko&psig=AOvVaw1BR3BiJM3s3nGdwF9XGz-d&ust=1609833018490000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOjb1bzlge4CFQAAAAAdAAAAABAD", 
+     productDetailsEntity: {
+       id: 1, 
+       parts: 12, 
+       manufacturer: "Marvel", 
+       collectable: true
+     }, 
+     categoryEntity: {
+       name: "Toys", 
+       description: "Marvel"
+     }
+   ) {
+     id,
+     image
+   }
+ }
+ 
+ QUERY:
+ {
+   getProducts(page: 0, size: 10){
+     id,
+     name,
+     image,
+     category {
+       name,
+       description
+     }
+   }
+ }
 
 ## Product JSON Examples
     {

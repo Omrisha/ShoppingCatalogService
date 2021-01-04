@@ -1,7 +1,9 @@
 package il.ac.afeka.shoppingcatalogservice.layout;
 
+import graphql.GraphQL;
 import il.ac.afeka.shoppingcatalogservice.logic.ShoppingCatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

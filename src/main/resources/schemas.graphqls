@@ -1,0 +1,40 @@
+type Query {
+    getProducts(page: Int, size: Int): [ProductEntity]
+}
+
+type Mutation {
+    writeProduct(id: String, name: String, price: Float, image: String, productDetailsEntity: ProductDetailsInput, categoryEntity: CategoryInput): ProductEntity
+}
+
+type CategoryEntity {
+    name: String
+    description: String
+}
+
+input CategoryInput {
+    name: String
+    description: String
+}
+
+type ProductDetailsEntity {
+    id: Int
+    parts: Int
+    manufacturer: String
+    collectable: Boolean
+}
+
+input ProductDetailsInput {
+    id: Int
+    parts: Int
+    manufacturer: String
+    collectable: Boolean
+}
+
+type ProductEntity {
+    id: String
+    name: String
+    price: Float
+    image: String
+    details: ProductDetailsEntity
+    category: CategoryEntity
+}
