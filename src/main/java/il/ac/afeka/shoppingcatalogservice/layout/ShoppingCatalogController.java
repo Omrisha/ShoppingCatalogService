@@ -1,11 +1,11 @@
 package il.ac.afeka.shoppingcatalogservice.layout;
 
-import graphql.GraphQL;
 import il.ac.afeka.shoppingcatalogservice.logic.ShoppingCatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ShoppingCatalogController {
@@ -34,7 +34,7 @@ public class ShoppingCatalogController {
     @RequestMapping(path = "/shopping/categories",
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    public CategoryBoundary[] searchCategories(
+    public List<CategoryBoundary> searchCategories(
             @RequestParam(name = "sortBy", required = false, defaultValue = "name") String sortBy,
             @RequestParam(name = "sortOrder", required = false, defaultValue = "ASC") String sortOrder,
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
@@ -52,7 +52,7 @@ public class ShoppingCatalogController {
     @RequestMapping(path = "/shopping/products",
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProductBoundary[] searchProducts(
+    public List<ProductBoundary> searchProducts(
             @RequestParam(name = "filterType", required = false, defaultValue = "") String filterType,
             @RequestParam(name = "filterValue", required = false, defaultValue = "") String filterValue,
             @RequestParam(name = "sortBy", required = false, defaultValue = "name") String sortBy,

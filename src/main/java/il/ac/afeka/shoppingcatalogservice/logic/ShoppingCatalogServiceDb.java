@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,16 +62,15 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
 
     @Override
     @Transactional(readOnly = true)
-    public CategoryBoundary[] searchCategories(String sortAttr, String sortOrder, int page, int size) {
+    public List<CategoryBoundary> searchCategories(String sortAttr, String sortOrder, int page, int size) {
         return categoryDao.
                 findAll(PageRequest.of(page,
-                                    size,
-                                    sortOrder.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
-                                    sortAttr))
+                        size,
+                        sortOrder.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
+                        sortAttr))
                 .stream()
                 .map(CategoryEntity::toBoundary)
-                .collect(Collectors.toList())
-                .toArray(CategoryBoundary[]::new);
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
 
     @Override
     @Transactional(readOnly = true)
-    public ProductBoundary[] searchProducts(String filterType, String filterValue, String sortBy, String sortOrder, int page, int size) {
+    public List<ProductBoundary> searchProducts(String filterType, String filterValue, String sortBy, String sortOrder, int page, int size) {
     	   	
         if (filterType.isEmpty()) {
         	 return this.productsDao
@@ -102,8 +102,7 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
                             sortBy))
         			.stream()
         			.map(ProductEntity::toBoundary)
-        			.collect(Collectors.toList())
-        			.toArray(ProductBoundary[]::new);
+        			.collect(Collectors.toList());
         }
         
         List<ProductEntity> res = null;
@@ -142,11 +141,10 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
                             sortBy));
         }
     	
-        return res == null ? new ProductBoundary[0] : res
+        return res == null ? new ArrayList<>() : res
         		.stream()
     			.map(ProductEntity::toBoundary)
-    			.collect(Collectors.toList())
-    			.toArray(ProductBoundary[]::new);
+    			.collect(Collectors.toList());
     }
 
     @Override
