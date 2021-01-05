@@ -16,6 +16,16 @@ Microservice for saving and querying products and categories.
 * after opening let gradle built and make the project.
 * Run (Eclipse -> Run as SpringBoot App, IntelliJ -> via Play button)
 
+## DB Installtion
+* Run `Docker - Postgres run docker run --rm --name postgres  -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=Aa123456! -p 5432:5432 postgres:12.0`
+* In application.properties Uncomment `# for localhost use` section
+* Comment back the following lines:
+  ```
+  spring.datasource.url=jdbc:postgresql://${DB_HOSTNAME}:${DB_PORT}/${DB_NAME}
+  spring.datasource.username=${DB_USER}
+  spring.datasource.password=${DB_PASS}
+  ```
+
 ## Usage
 
 - POST /shopping/categories
