@@ -101,7 +101,7 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
         					sortOrder.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
                             sortBy))
         			.stream()
-        			.map(e -> e.toBoundary())
+        			.map(ProductEntity::toBoundary)
         			.collect(Collectors.toList())
         			.toArray(ProductBoundary[]::new);
         }
@@ -144,7 +144,7 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
     	
         return res == null ? new ProductBoundary[0] : res
         		.stream()
-    			.map(e -> e.toBoundary())
+    			.map(ProductEntity::toBoundary)
     			.collect(Collectors.toList())
     			.toArray(ProductBoundary[]::new);
     }
