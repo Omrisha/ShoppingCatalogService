@@ -68,7 +68,7 @@ public class ShoppingCatalogServiceDb implements ShoppingCatalogService {
                                     sortOrder.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
                                     sortAttr))
                 .stream()
-                .map(e -> new CategoryBoundary(e.getName(), e.getDescription()))
+                .map(CategoryEntity::toBoundary)
                 .collect(Collectors.toList())
                 .toArray(CategoryBoundary[]::new);
     }
