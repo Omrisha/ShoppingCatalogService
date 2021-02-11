@@ -17,7 +17,7 @@ Microservice for saving and querying products and categories.
 * Run (Eclipse -> Run as SpringBoot App, IntelliJ -> via Play button)
 
 ## DB Installtion
-* Run `Docker - Postgres run docker run --rm --name postgres  -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=Aa123456! -p 5432:5432 postgres:12.0`
+* Run `Docker - Postgres run docker run --rm --name postgres-test-env -e POSTGRES_DB=shopping -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=o1m3r4i7 -p 5432:5432 postgres:12.0`
 * In application.properties Uncomment `# for localhost use` section
 * Comment back the following lines:
   ```
